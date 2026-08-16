@@ -1,0 +1,182 @@
+/*
+ * NeonRed Design System — global stylesheet (from ai/themes/theme/globals.css)
+ * + Game Installer theme-engine variables and background support.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   1. DESIGN TOKENS (CSS variables)
+   ============================================================ */
+:root {
+  --color-background: #050505;
+  --color-background-pure: #000000;
+  --color-surface: #121212;
+  --color-surface-raised: #1a1a1a;
+
+  --color-primary: 239 68 68;     /* rgb of #ef4444 for Tailwind opacity syntax */
+  --color-secondary: 190 18 60;   /* #be123c */
+  --color-accent: 255 0 0;        /* #ff0000 */
+
+  --color-text-main: #ffffff;
+  --color-text-muted: #9ca3af;
+  --color-text-dim: #6b7280;
+
+  --color-border: rgba(255, 255, 255, 0.10);
+  --color-border-strong: rgba(255, 255, 255, 0.20);
+  --color-primary-border: rgba(239, 68, 68, 0.30);
+
+  --glow-primary: 0 0 20px rgba(239, 68, 68, 0.6);
+  --glow-primary-soft: 0 0 30px rgba(239, 68, 68, 0.4);
+  --glow-primary-strong: 0 0 50px rgba(239, 68, 68, 0.5);
+
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 1.75rem;
+
+  --ease-cubic: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Theme-engine accent (overridden at runtime) */
+  --theme-primary: #ef4444;
+  --theme-primary-hover: #f87171;
+  --theme-accent: #ff0000;
+  --theme-bg-image: none;
+  --theme-font-main: 'Inter', 'Vazirmatn', sans-serif;
+  --theme-border-radius: 1.25rem;
+}
+
+/* ============================================================
+   2. BASE / RESET (app-like feel)
+   ============================================================ */
+* { box-sizing: border-box; }
+
+:root {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  cursor: default;
+}
+
+/* Allow selection only inside real text fields */
+input, textarea, [contenteditable] {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  cursor: text;
+}
+
+body {
+  background-color: #000000;
+  background-image: var(--theme-bg-image);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: var(--color-text-main);
+  overflow: hidden; /* desktop-app feel */
+  font-family: var(--theme-font-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   3. GLASS / NEON UTILITIES (component layer)
+   ============================================================ */
+@layer components {
+  .glass {
+    background: rgba(0, 0, 0, 0.40);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--color-border);
+  }
+  .glass-strong {
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid var(--color-border-strong);
+  }
+  /* Ambient red blob used behind modals/cards */
+  .ambient-glow {
+    position: absolute;
+    width: 15rem; height: 15rem;
+    background: rgba(239, 68, 68, 0.10);
+    border-radius: 9999px;
+    filter: blur(80px);
+    pointer-events: none;
+  }
+  /* Animated top accent bar of a modal */
+  .modal-accent-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 0.25rem;
+    background: linear-gradient(to right, #ef4444, #f97316, #ef4444);
+  }
+  .text-gradient-neon {
+    background: linear-gradient(to right, #ef4444, #f87171);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* ============================================================
+   4. CUSTOM SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #ef4444; }
+
+/* ============================================================
+   5. KEYFRAMES (mirror tailwind.config.js)
+   ============================================================ */
+@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+@keyframes slideUp {
+  0% { transform: translateY(20px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes slideInRight {
+  0% { transform: translateX(24px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+@keyframes borderRotate {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+@keyframes scanline {
+  0% { top: -20%; }
+  100% { top: 120%; }
+}
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes gradient-x {
+  0%, 100% { background-size: 200% 200%; background-position: left center; }
+  50% { background-size: 200% 200%; background-position: right center; }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .5; }
+}
+
+/* Low-power-mode: SmartCoreContext adds this class to <html> to kill heavy effects */
+html.low-power *,
+html.low-power *::before,
+html.low-power *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  backdrop-filter: none !important;
+  filter: none !important;
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Blue Ocean",
+  "colors": {
+    "primary": "#0ea5e9",
+    "secondary": "#1e3a8a",
+    "accent": "#22d3ee",
+    "text": "#e0f2fe",
+    "card": "#0c1f33"
+  },
+  "fonts": {
+    "main": "Segoe UI",
+    "mono": "Consolas"
+  },
+  "borderRadius": "14px"
+}
